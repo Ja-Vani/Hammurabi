@@ -5,10 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories(Inc)
 
+#add_subdirectory(test)
+
 set(SOURCE
         Src/main.cpp
         Src/logic.cpp
-        Inc/logic.h
+        Src/menu.cpp
 )
 
 add_executable(Hammurabi ${SOURCE})

@@ -1,5 +1,5 @@
 //
-// Created by Sonic on 22.09.2024.
+// Created by Ja_Vani on 22.09.2024.
 //
 
 #include "logic.h"
