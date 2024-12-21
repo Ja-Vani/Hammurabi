@@ -4,16 +4,16 @@
 
 #include "logic.h"
 
-constexpr uint64_t min_get_bushel = 1;
-constexpr uint64_t max_get_bushel = 6;
-constexpr uint64_t min_land_const = 17;
-constexpr uint64_t max_land_const = 26;
+constexpr int64_t min_get_bushel = 1;
+constexpr int64_t max_get_bushel = 6;
+constexpr int64_t min_land_const = 17;
+constexpr int64_t max_land_const = 26;
 constexpr double max_eat_rat = 0.07;
 
-Logic::Logic(uint8_t rounds) : acr_land_(1000), people_(100), wheat_bushel_(2800), max_rounds_(rounds) {
+Logic::Logic(int8_t rounds) : acr_land_(1000), people_(100), wheat_bushel_(2800), max_rounds_(rounds) {
     generator_.seed(std::random_device()());
-    get_bushel_rate_distribution_ = std::uniform_int_distribution<uint64_t>(min_get_bushel, max_get_bushel);
-    bushel_cost_distribution_ = std::uniform_int_distribution<uint64_t>(min_land_const, max_land_const);
+    get_bushel_rate_distribution_ = std::uniform_int_distribution<int64_t>(min_get_bushel, max_get_bushel);
+    bushel_cost_distribution_ = std::uniform_int_distribution<int64_t>(min_land_const, max_land_const);
     rat_eat_rate_distribution_ = std::uniform_real_distribution<double>(0.0, max_eat_rat);
     chuma_rate_distribution_ = std::uniform_real_distribution<double>(0.0, 1.0);
     land_cost_ = bushel_cost_distribution_(this->generator_);
@@ -47,7 +47,7 @@ bool Logic::final() {
     return max_rounds_ > round_;
 }
 
-bool Logic::can_by_acr(uint64_t buy) {
+bool Logic::can_by_acr(int64_t buy) {
     if (buy * land_cost_ <= wheat_bushel_) {
         player_land_buy_ = buy;
         return true;
@@ -55,7 +55,7 @@ bool Logic::can_by_acr(uint64_t buy) {
     return false;
 }
 
-bool Logic::can_sell_acr(uint64_t acrs) {
+bool Logic::can_sell_acr(int64_t acrs) {
     if (acrs <= acr_land_) {
         player_land_sell_ = acrs;
         return true;
@@ -63,7 +63,7 @@ bool Logic::can_sell_acr(uint64_t acrs) {
     return false;
 }
 
-bool Logic::can_eat(uint64_t bushels) {
+bool Logic::can_eat(int64_t bushels) {
     if (bushels <= wheat_bushel_ + player_land_buy_ * land_cost_ - player_land_sell_ * land_cost_) {
         player_wheal_eat_ = bushels;
         return true;
@@ -71,7 +71,7 @@ bool Logic::can_eat(uint64_t bushels) {
     return false;
 }
 
-bool Logic::can_sow(uint64_t acrs) {
+bool Logic::can_sow(int64_t acrs) {
     if (acrs <= acr_land_ && static_cast<double>(acrs) * 0.5 <= static_cast<double>(wheat_bushel_) + static_cast<double>
         (player_land_buy_) * land_cost_ + static_cast<double>(player_wheal_eat_) -
         static_cast<double>(player_land_sell_) * land_cost_) {
@@ -81,7 +81,7 @@ bool Logic::can_sow(uint64_t acrs) {
     return false;
 }
 
-uint64_t Logic::calculate_L() {
+int64_t Logic::calculate_L() {
     return acr_land_ / people_;
 }
 

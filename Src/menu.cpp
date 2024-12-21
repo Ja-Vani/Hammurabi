@@ -110,7 +110,7 @@ bool Menu::next_round() noexcept {
 
 bool Menu::can_by_acr(const std::wstring &in) {
     try {
-        return logic_.can_by_acr(std::stoull(in));
+        return logic_.can_by_acr(std::stoll(in));
     } catch (const std::exception &ex) {
         std::wcout << L"Ошибка введённого типа данных" << std::endl;
         return false;
@@ -119,7 +119,7 @@ bool Menu::can_by_acr(const std::wstring &in) {
 
 bool Menu::can_sell_acr(const std::wstring &in) {
     try {
-        return logic_.can_sell_acr(std::stoull(in));
+        return logic_.can_sell_acr(std::stoll(in));
     } catch (const std::exception &ex) {
         std::wcout << L"Ошибка введённого типа данных" << std::endl;
         return false;
@@ -128,7 +128,7 @@ bool Menu::can_sell_acr(const std::wstring &in) {
 
 bool Menu::can_eat(const std::wstring &in) {
     try {
-        return logic_.can_eat(std::stoull(in));
+        return logic_.can_eat(std::stoll(in));
     } catch (const std::exception &ex) {
         std::wcout << L"Ошибка введённого типа данных" << std::endl;
         return false;
@@ -137,7 +137,7 @@ bool Menu::can_eat(const std::wstring &in) {
 
 bool Menu::can_sow(const std::wstring &in) {
     try {
-        return logic_.can_sow(std::stoull(in));
+        return logic_.can_sow(std::stoll(in));
     } catch (const std::exception &ex) {
         std::wcout << L"Ошибка введённого типа данных" << std::endl;
         return false;
@@ -167,7 +167,7 @@ void Menu::player_do() {
 Menu::~Menu() = default ;
 
 void Menu::results() {
-    uint64_t l = logic_.calculate_L();
+    int64_t l = logic_.calculate_L();
     double p = logic_.calculate_P();
     if (l < 7 || p > 0.33) {
         std::wcout <<
